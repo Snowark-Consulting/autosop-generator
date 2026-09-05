@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SnowArk - AutoSOP Creator</title>
+    <link rel="icon" type="image/png" href="/autosop-generator/favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cambo&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- html2pdf.js for client-side PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              snowark: {
+                teal: '#174445',
+                green: '#0d8f64',
+                warm: '#e9e7e3',
+                heading: '#0e2929',
+                muted: '#5b6868',
+                dark: '#232323',
+              }
+            },
+            fontFamily: {
+              sans: ['Lato', 'sans-serif'],
+              display: ['Cambo', 'Georgia', 'serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root { font-synthesis: none; }
+      body {
+        background-color: #e9e7e3; /* SnowArk warm gray */
+        color: #232323;
+        font-family: 'Lato', sans-serif;
+      }
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        .print-break-inside-avoid {
+          break-inside: avoid;
+        }
+        body {
+          background-color: white;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/autosop-generator/assets/index-AZ6lKMyQ.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+</body>
+</html>
