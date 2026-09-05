@@ -1,6 +1,6 @@
 {
-  "name": "[LIVE] AutoSOP Generator",
-  "description": "An internal tool to generate Standard Operating Procedures from video screen recordings using Gemini AI.",
+  "name": "SnowArk AutoSOP Creator",
+  "description": "SnowArk internal tool to generate Standard Operating Procedures as PDFs from video screen recordings, using Gemini AI fully client-side.",
   "requestFramePermissions": [],
   "majorCapabilities": []
 }

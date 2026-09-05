@@ -367,14 +367,14 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <div className="bg-white rounded-xl shadow-lg border-t-4 border-afs-orange p-8">
+      <div className="bg-white rounded-xl shadow-lg border-t-4 border-snowark-green p-8">
         <div className="flex justify-between items-center mb-8 border-b pb-4">
-          <h2 className="text-2xl font-display font-bold text-afs-navy">Edit SOP Details</h2>
+          <h2 className="text-2xl font-display font-bold text-snowark-teal">Edit SOP Details</h2>
           <div className="space-x-4">
-             <button onClick={onCancel} className="text-gray-500 hover:text-afs-navy font-bold">Cancel</button>
+             <button onClick={onCancel} className="text-gray-500 hover:text-snowark-teal font-bold">Cancel</button>
              <button 
               onClick={() => onSave(data)}
-              className="bg-afs-navy hover:bg-blue-900 text-white px-6 py-2 rounded-lg font-bold shadow transition-transform hover:-translate-y-0.5"
+              className="bg-snowark-teal hover:bg-blue-900 text-white px-6 py-2 rounded-lg font-bold shadow transition-transform hover:-translate-y-0.5"
              >
                Save & Preview
              </button>
@@ -384,33 +384,33 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
         {/* Global Fields */}
         <div className="space-y-6 mb-10">
           <div>
-            <label className="block text-sm font-bold text-afs-navy mb-2">SOP Title</label>
+            <label className="block text-sm font-bold text-snowark-teal mb-2">SOP Title</label>
             <input 
               type="text" 
               value={data.title} 
               onChange={handleTitleChange}
-              className="w-full px-4 py-3 rounded border border-gray-300 bg-white text-gray-900 focus:border-afs-navy focus:ring-2 focus:ring-afs-navy/20 outline-none transition-colors"
+              className="w-full px-4 py-3 rounded border border-gray-300 bg-white text-gray-900 focus:border-snowark-teal focus:ring-2 focus:ring-snowark-teal/20 outline-none transition-colors"
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-afs-navy mb-2">Overview</label>
+            <label className="block text-sm font-bold text-snowark-teal mb-2">Overview</label>
             <textarea 
               value={data.overview} 
               onChange={handleOverviewChange}
               rows={4}
-              className="w-full px-4 py-3 rounded border border-gray-300 bg-white text-gray-900 focus:border-afs-navy focus:ring-2 focus:ring-afs-navy/20 outline-none transition-colors"
+              className="w-full px-4 py-3 rounded border border-gray-300 bg-white text-gray-900 focus:border-snowark-teal focus:ring-2 focus:ring-snowark-teal/20 outline-none transition-colors"
             />
           </div>
         </div>
 
         {/* Steps List */}
         <div className="space-y-6">
-          <h3 className="text-xl font-bold text-afs-navy mb-4">Steps ({data.steps.length})</h3>
+          <h3 className="text-xl font-bold text-snowark-teal mb-4">Steps ({data.steps.length})</h3>
           
           {data.steps.map((step, index) => (
             <div key={index} className="border border-gray-200 rounded-lg p-6 bg-gray-50 flex flex-col gap-4 shadow-sm">
               <div className="flex gap-6 items-start">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-afs-navy text-white flex items-center justify-center font-bold mt-2">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-snowark-teal text-white flex items-center justify-center font-bold mt-2">
                     {step.stepNumber}
                   </div>
                   
@@ -418,7 +418,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
                     <textarea 
                       value={step.description}
                       onChange={(e) => handleStepDescriptionChange(index, e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded bg-white text-gray-900 focus:border-afs-navy focus:ring-2 focus:ring-afs-navy/20 outline-none"
+                      className="w-full p-3 border border-gray-300 rounded bg-white text-gray-900 focus:border-snowark-teal focus:ring-2 focus:ring-snowark-teal/20 outline-none"
                       rows={3}
                       placeholder="Describe this step..."
                     />
@@ -428,7 +428,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
                       {step.screenshotUrl ? (
                         <div className="flex flex-col gap-2">
                           <div 
-                            className="relative group w-56 h-32 bg-gray-200 rounded overflow-hidden border border-gray-300 shadow-sm cursor-pointer hover:border-afs-orange transition-colors"
+                            className="relative group w-56 h-32 bg-gray-200 rounded overflow-hidden border border-gray-300 shadow-sm cursor-pointer hover:border-snowark-green transition-colors"
                             onClick={() => openCaptureModal(index, 'IMAGE')}
                           >
                             <img src={step.screenshotUrl} alt="Step" className="w-full h-full object-cover" />
@@ -443,7 +443,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
                           <div className="flex gap-3 text-sm">
                             <button 
                               onClick={() => openCaptureModal(index, 'IMAGE')}
-                              className="font-bold text-afs-navy hover:underline flex items-center gap-1"
+                              className="font-bold text-snowark-teal hover:underline flex items-center gap-1"
                             >
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -453,7 +453,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
                             <span className="text-gray-300">|</span>
                             <button 
                               onClick={() => openCaptureModal(index, 'VIDEO')}
-                              className="font-bold text-gray-500 hover:text-afs-orange flex items-center gap-1"
+                              className="font-bold text-gray-500 hover:text-snowark-green flex items-center gap-1"
                             >
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -464,7 +464,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
                           </div>
                         </div>
                       ) : (
-                        <div className="w-56 h-32 bg-white rounded border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-xs text-gray-500 gap-2 hover:border-afs-orange transition-colors cursor-pointer" onClick={() => openCaptureModal(index, 'VIDEO')}>
+                        <div className="w-56 h-32 bg-white rounded border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-xs text-gray-500 gap-2 hover:border-snowark-green transition-colors cursor-pointer" onClick={() => openCaptureModal(index, 'VIDEO')}>
                           <span className="font-bold">No Image</span>
                           <span className="text-blue-600 underline">Add Screenshot</span>
                         </div>
@@ -493,7 +493,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
               <div className="border-t border-gray-200 pt-2 flex justify-center">
                   <button 
                     onClick={() => handleInsertStep(index)}
-                    className="text-xs font-bold text-afs-medGrey hover:text-afs-orange flex items-center gap-1 px-3 py-1 rounded hover:bg-orange-50 transition-colors"
+                    className="text-xs font-bold text-snowark-muted hover:text-snowark-green flex items-center gap-1 px-3 py-1 rounded hover:bg-orange-50 transition-colors"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -506,7 +506,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
 
           <button 
             onClick={handleAddStepAtEnd}
-            className="w-full py-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 font-bold hover:border-afs-navy hover:text-afs-navy hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
+            className="w-full py-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 font-bold hover:border-snowark-teal hover:text-snowark-teal hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -524,7 +524,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
       >
         <div className="flex flex-col h-full" style={{minHeight: '600px'}}>
           <div className="flex justify-between items-center mb-4">
-             <h3 className="text-xl font-bold text-afs-navy">
+             <h3 className="text-xl font-bold text-snowark-teal">
                {mode === 'VIDEO' ? `Select Frame for Step ${(activeStepIndex ?? 0) + 1}` : `Edit Screenshot - Step ${(activeStepIndex ?? 0) + 1}`}
              </h3>
              {mode === 'IMAGE' && (
@@ -532,7 +532,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-wider mr-2 hidden sm:inline">Tools:</span>
                   <button 
                     onClick={() => setActiveTool('CROP')}
-                    className={`flex items-center gap-2 px-3 py-2 rounded font-bold text-sm transition-all ${activeTool === 'CROP' ? 'bg-white shadow text-afs-orange border border-gray-200' : 'text-gray-500 hover:bg-gray-200 hover:text-gray-700'}`}
+                    className={`flex items-center gap-2 px-3 py-2 rounded font-bold text-sm transition-all ${activeTool === 'CROP' ? 'bg-white shadow text-snowark-green border border-gray-200' : 'text-gray-500 hover:bg-gray-200 hover:text-gray-700'}`}
                     title="Drag to crop the image"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -629,7 +629,7 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
                {mode === 'VIDEO' ? (
                  <button 
                    onClick={captureFrameToEdit}
-                   className="px-6 py-2 bg-afs-orange text-white font-bold rounded shadow hover:bg-orange-600 transition-colors flex items-center gap-2"
+                   className="px-6 py-2 bg-snowark-green text-white font-bold rounded shadow hover:bg-orange-600 transition-colors flex items-center gap-2"
                  >
                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -644,13 +644,13 @@ export const SopEditor: React.FC<SopEditorProps> = ({ initialData, videoFile, on
                         setEditingImage(null);
                         setHistory([]);
                      }}
-                     className="px-4 py-2 text-afs-navy font-bold hover:bg-blue-50 rounded transition-colors"
+                     className="px-4 py-2 text-snowark-teal font-bold hover:bg-blue-50 rounded transition-colors"
                    >
                      Retake from Video
                    </button>
                    <button 
                      onClick={saveEditedImage}
-                     className="px-6 py-2 bg-afs-navy text-white font-bold rounded shadow hover:bg-blue-900 transition-colors flex items-center gap-2"
+                     className="px-6 py-2 bg-snowark-teal text-white font-bold rounded shadow hover:bg-blue-900 transition-colors flex items-center gap-2"
                    >
                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

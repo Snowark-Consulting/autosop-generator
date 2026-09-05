@@ -1,4 +1,3 @@
-
 export interface UserDetails {
   fullName: string;
   role: string;
@@ -26,13 +25,7 @@ export enum AppState {
 }
 
 declare global {
-  interface AIStudio {
-    hasSelectedApiKey: () => Promise<boolean>;
-    openSelectKey: () => Promise<void>;
-  }
-
   interface Window {
     html2pdf: any;
-    aistudio?: AIStudio;
   }
 }

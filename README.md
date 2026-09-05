@@ -1,20 +1,37 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+<h1>SnowArk AutoSOP Creator</h1>
+<p><strong>Turn screen recordings into professional PDF Standard Operating Procedures.</strong></p>
 </div>
 
-# Run and deploy your AI Studio app
+SnowArk internal tool. Upload a screen-recording video (MP4, MOV, WebM); the app extracts frames and audio in your browser, sends them to the Gemini API to draft an SOP, then lets you edit the steps and screenshots before exporting a branded PDF.
 
-This contains everything you need to run your app locally.
+## How it runs
 
-View your app in AI Studio: https://ai.studio/apps/0a92de72-708f-4833-a036-c7a0ad3ca500
+Fully client-side and static. No backend, no account, no server to maintain. The Gemini API is called directly from your browser.
 
-## Run Locally
+**Live tool:** https://snowark-consulting.github.io/autosop-generator/
 
-**Prerequisites:**  Node.js
+## Local development
 
+**Prerequisites:** Node.js
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm install
+npm run dev       # starts Vite dev server
+npm run build     # production build to dist/
+npm run preview   # serve the built site
+```
+
+## Gemini API key
+
+The app needs a Google Gemini API key: click **Settings → Add API Key** in the tool and paste it in, or set one programmatically with
+
+```js
+localStorage.setItem('snowark.geminiApiKey', 'YOUR_KEY')
+```
+
+The key is stored **only in your browser's localStorage** and never leaves your machine. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
+
+## Deploy
+
+Built with Vite. `npm run build` produces a static `dist/` that can be hosted on GitHub Pages (this repo), Netlify, Vercel Static, or any static host. The `base` path in `vite.config.ts` is set to `/autosop-generator/` to match the GitHub Pages subdirectory.

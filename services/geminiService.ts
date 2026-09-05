@@ -2,10 +2,100 @@ import { SopData } from "../types";
 import { extractFramesFromVideo } from "./videoService";
 import { extractAudioFromVideo } from "./audioService";
 
+/**
+ * Client-side CLI API key handling.
+ * The Gemini key is stored in the browser (localStorage) so this tool can run
+ * fully static on GitHub Pages with no backend. The key never leaves the browser.
+ */
+const GEMINI_KEY_STORAGE = "snowark.geminiApiKey";
+
+export const getGeminiKey = (): string | null =>
+  localStorage.getItem(GEMINI_KEY_STORAGE);
+
+export const setGeminiKey = (key: string): void => {
+  localStorage.setItem(GEMINI_KEY_STORAGE, key.trim());
+};
+
+export const clearGeminiKey = (): void => {
+  localStorage.removeItem(GEMINI_KEY_STORAGE);
+};
+
+const GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta";
+const GEMINI_MODEL = "gemini-2.5-flash-latest";
+
+/**
+ * Calls the Gemini API directly from the browser with a structured-JSON schema.
+ * No backend involved.
+ */
+const generateContent = async (
+  apiKey: string,
+  parts: any[],
+  prompt: string
+): Promise<any> => {
+  const res = await fetch(
+    `${GEMINI_BASE}/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(apiKey)}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }, ...parts] }],
+        generationConfig: {
+          temperature: 0.3,
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "OBJECT",
+            properties: {
+              title: { type: "STRING", description: "A professional, action-oriented title for the SOP." },
+              overview: { type: "STRING", description: "A concise overview of the process goal and prerequisites." },
+              steps: {
+                type: "ARRAY",
+                items: {
+                  type: "OBJECT",
+                  properties: {
+                    stepNumber: { type: "INTEGER" },
+                    description: { type: "STRING", description: "Clear, imperative instruction for the step. Include constraints mentioned in audio." },
+                    timestampSeconds: { type: "NUMBER", description: "The estimated time in seconds where this step visually occurs." },
+                  },
+                  required: ["stepNumber", "description", "timestampSeconds"],
+                },
+              },
+            },
+            required: ["title", "overview", "steps"],
+          },
+        },
+      }),
+    }
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    const detail = data?.error?.message || JSON.stringify(data);
+    const msg = `${detail}`;
+    // Surface known failures clearly
+    if (msg.includes("API key not valid")) {
+      throw new Error("The Gemini API key is invalid. Check your key in settings.");
+    }
+    if (msg.includes("not enough") || msg.toLowerCase().includes("quota")) {
+      throw new Error("The Gemini API key has hit its quota or is out of credits.");
+    }
+    throw new Error(msg);
+  }
+
+  const text = data?.candidates?.[0]?.content?.parts?.map((p: any) => p.text || "").join("") || "";
+  if (!text) throw new Error("No response from AI");
+  return JSON.parse(text);
+};
+
 export const generateSopFromVideo = async (videoFile: File): Promise<SopData> => {
+  const apiKey = getGeminiKey();
+  if (!apiKey) {
+    throw new Error("Please add your Gemini API key in Settings first.");
+  }
+
   console.log("Sampling video frames...");
   const videoFrames = await extractFramesFromVideo(videoFile, 45); // Optimized frame count
-  
+
   console.log("Extracting audio track...");
   const audioPart = await extractAudioFromVideo(videoFile);
 
@@ -17,7 +107,7 @@ export const generateSopFromVideo = async (videoFile: File): Promise<SopData> =>
   }
 
   const prompt = `
-    You are an expert technical writer for The AFS Group.
+    You are an expert technical writer for SnowArk.
     Your objective is to create a highly accurate, reproducible Standard Operating Procedure (SOP) based on the provided screen recording analysis.
 
     **INPUTS:**
@@ -41,44 +131,10 @@ export const generateSopFromVideo = async (videoFile: File): Promise<SopData> =>
     Return the response in JSON format.
   `;
 
-  console.log("Sending to backend proxy...");
+  const parts: any[] = [];
+  if (audioPart) parts.push(audioPart);
+  if (videoFrames && videoFrames.length > 0) parts.push(...videoFrames);
 
-  try {
-    const res = await fetch("/api/generate-sop", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        prompt,
-        audioPart,
-        videoFrames
-      })
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      const errorMessage = errorData.error || `Server error: ${res.status} ${res.statusText}`;
-      throw new Error(errorMessage);
-    }
-
-    const data = await res.json();
-    return data as SopData;
-  } catch (error: any) {
-    console.error("Gemini API Error (via backend):", error);
-    
-    const errorMessage = error.message || JSON.stringify(error);
-
-    // Handle 400 INVALID_ARGUMENT (Bad API Key)
-    if (errorMessage.includes("API key not valid") || errorMessage.includes("400") || errorMessage.includes("Missing GEMINI_API_KEY")) {
-        throw new Error("The API Key configured in your environment is invalid. Please check your deployment settings or try selecting the key again.");
-    }
-    
-    // Handle 413 Payload Too Large specifically
-    if (errorMessage.includes("413") || errorMessage.includes("Too Large")) {
-      throw new Error("The video is still too large (over 30 mins). Please try a shorter video.");
-    }
-    
-    throw error;
-  }
+  console.log("Sending to Gemini directly from the browser...");
+  return generateContent(apiKey, parts, prompt);
 };
