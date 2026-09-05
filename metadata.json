@@ -1,0 +1,6 @@
+{
+  "name": "[LIVE] AutoSOP Generator",
+  "description": "An internal tool to generate Standard Operating Procedures from video screen recordings using Gemini AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
